@@ -15,4 +15,6 @@ RoxygenNote: 7.1.2
 Imports: 
     magrittr,
     readr,
-    stringr
+    stringr,
+    tibble,
+    tidyr
