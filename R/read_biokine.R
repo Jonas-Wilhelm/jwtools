@@ -36,7 +36,7 @@ read_biokine_all <- function(path = "."){
   
   data_list <- lapply(files, read_biokine)
   
-  names(data_list) <- files
+  names(data_list) <- list.files(path, pattern = ".bka$", recursive = T)
   
   data <- tibble::enframe(data_list) %>%
     tidyr::unnest(value)
