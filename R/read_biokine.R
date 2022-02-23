@@ -32,7 +32,7 @@ read_biokine <- function(path = ""){
 #' read_biokine_all(path = "my_dir")
 
 read_biokine_all <- function(path = "."){
-  files <- list.files(path, pattern = ".bka$")
+  files <- list.files(path, pattern = ".bka$", full.names = T, recursive = T)
   
   data_list <- lapply(files, read_biokine)
   
