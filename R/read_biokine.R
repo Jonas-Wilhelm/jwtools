@@ -14,7 +14,7 @@ read_biokine <- function(path = ""){
   
   comment_lines <- max(which(comment_lines))
   
-  data <- readr::read_tsv(file = path, skip = comment_lines, col_names = c("time", "value"), col_types = cols(time = col_double(), value = col_double()))
+  data <- readr::read_tsv(file = path, skip = comment_lines, col_names = c("time", "value"), col_types = readr::cols(time = col_double(), value = col_double()))
   
   return(data)
 }
