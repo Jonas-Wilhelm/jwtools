@@ -4,15 +4,15 @@
 \alias{read_biokine}
 \title{Function to import bio-kine ascii files (.bka)}
 \usage{
-read_biokine(string = "foo")
+read_biokine(path = "")
 }
 \arguments{
-\item{string}{String to count letters in. Defaults to "foo"}
+\item{path}{Path to the input .bka file}
 }
 \description{
 This function allows you to import bio-kine ascii files (.bka).
 These are the standard output of BioLogic stopped flow devices.
 }
 \examples{
-read_biokin()
+read_biokin(path = "my_file.bka")
 }
