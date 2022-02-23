@@ -2,6 +2,7 @@
 #'
 #' This function allows you to import bio-kine ascii files (.bka). 
 #' These are the standard output of BioLogic stopped flow devices.
+#' @importFrom magrittr %>%
 #' @param path Path to the input .bka file
 #' @export
 #' @examples

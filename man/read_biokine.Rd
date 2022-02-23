@@ -14,5 +14,5 @@ This function allows you to import bio-kine ascii files (.bka).
 These are the standard output of BioLogic stopped flow devices.
 }
 \examples{
-read_biokin(path = "my_file.bka")
+read_biokine(path = "my_file.bka")
 }
