@@ -5,7 +5,7 @@
 #' @param path Path to the input .bka file
 #' @export
 #' @examples
-#' read_biokin(path = "my_file.bka")
+#' read_biokine(path = "my_file.bka")
 
 read_biokine <- function(path = ""){
   comment_lines <- readr::read_lines(path, n_max = 100) %>%
