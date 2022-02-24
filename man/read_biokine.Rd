@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_biokine.R
 \name{read_biokine}
 \alias{read_biokine}
-\title{Function to import bio-kine ascii files (.bka)}
+\title{Import bio-kine ascii files (.bka)}
 \usage{
 read_biokine(path = "")
 }
