@@ -116,6 +116,8 @@ timeseries_av <- function(data, window = 5){
 
 nls_MC <- function(model, runs = 1000){
   
+  require(broom); require(tibble); require(dplyr) 
+  
   sigma     <- broom::glance(model)$sigma
   start     <- summary(model)$param[,1]
   params_MC <- tibble::tibble()
