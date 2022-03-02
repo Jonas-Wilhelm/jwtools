@@ -121,6 +121,8 @@ nls_MC <- function(model, runs = 1000){
   params_MC <- tibble::tibble()
   data      <- broom::augment(model)
   var       <- model$m$formula() %>% as.character() %>% .[2]
+  opt       <- model$control
+  opt$warnOnly <- FALSE
   
   for(i in 1:runs){
     data_MC <- data
@@ -129,7 +131,7 @@ nls_MC <- function(model, runs = 1000){
       nls <- nls(model$m$formula(),
                  data    = data_MC, 
                  start   = start, 
-                 control = model$control),
+                 control = opt),
       silent = T
     )
     if(!"try-error" %in% class(try)){
