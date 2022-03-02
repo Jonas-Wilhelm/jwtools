@@ -116,8 +116,6 @@ timeseries_av <- function(data, window = 5){
 
 nls_MC <- function(model, runs = 1000){
   
-  require(broom); require(tibble); require(dplyr) 
-  
   sigma     <- broom::glance(model)$sigma
   start     <- summary(model)$param[,1]
   params_MC <- tibble::tibble()
@@ -128,7 +126,7 @@ nls_MC <- function(model, runs = 1000){
     data_MC <- data
     data_MC[var] <- data$.fitted + rnorm(n = nrow(data), mean = 0, sd = sigma)
     try <- try(
-      nls <- nls(n$m$formula(),
+      nls <- nls(model$m$formula(),
                  data    = data_MC, 
                  start   = start, 
                  control = model$control),
