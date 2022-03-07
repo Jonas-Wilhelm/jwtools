@@ -169,10 +169,11 @@ summarise_nls_MC <- function(data, conf.level = 0.95){
   summary <- data %>%
     dplyr::group_by(term) %>%
     dplyr::summarise(
-      estimate  = mean(estimate),
-      std.error = sd(estimate),
       CI_lo     = quantile(estimate, lo),
-      CI_hi     = quantile(estimate, hi))
+      CI_hi     = quantile(estimate, hi),
+      std.error = sd(estimate),
+      estimate  = mean(estimate)) %>%
+    dplyr::select(term, estimate, std.error, CI_lo, CI_hi)
   
   return(summary)
 }
