@@ -7,7 +7,7 @@
 read_biokine_all(path = ".")
 }
 \arguments{
-\item{path}{Path to the input directory containing the .bka files to read}
+\item{path}{Path to the input directory containing the .bka files to read.}
 }
 \description{
 This function allows you to import multiple bio-kine ascii files (.bka) in a directory.

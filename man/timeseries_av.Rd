@@ -7,9 +7,9 @@
 timeseries_av(data, window = 5)
 }
 \arguments{
-\item{data}{A data frame with two columns: time and value}
+\item{data}{A data frame with two columns: time and value.}
 
-\item{width}{Number of time/value pairs that will be averaged into one pair}
+\item{width}{Number of time/value pairs that will be averaged into one pair.}
 }
 \description{
 This function reduces the number of time points in a data frame by averaging

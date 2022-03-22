@@ -7,7 +7,7 @@
 moving_av(x, window = 5)
 }
 \arguments{
-\item{x}{Vector for which to calculate moving average}
+\item{x}{Vector for which to calculate moving average.}
 
 \item{window}{Width of the window for the moving average. Number of
 neighboring values that will be averaged at each position of x.}

@@ -7,9 +7,9 @@
 nls_MC(model, runs = 1000)
 }
 \arguments{
-\item{model}{A nls object to perform MC calculations with}
+\item{model}{A nls object to perform MC calculations with.}
 
-\item{runs}{Number of MC runs to perform (defaults to 1000)}
+\item{runs}{Number of MC runs to perform (defaults to 1000).}
 }
 \description{
 Perform Monte Carlo (MC) simulations of non linear least squares models.

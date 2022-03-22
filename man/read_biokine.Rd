@@ -7,7 +7,7 @@
 read_biokine(path = "")
 }
 \arguments{
-\item{path}{Path to the input .bka file}
+\item{path}{Path to the input .bka file.}
 }
 \description{
 This function allows you to import bio-kine ascii files (.bka).
