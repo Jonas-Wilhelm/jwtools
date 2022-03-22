@@ -264,7 +264,7 @@ read_kinetic_TECAN <- function(TECAN_files, layout_files, n_cond = 3,
     start <- readxl::read_excel(path = TECAN_files[i], range = "A1:A10000", col_names = c("colname"))[[1]] %>% 
       grep(pattern = "Cycle Nr.")
     
-    d <- readxl::read_excel(TECAN_files[i], skip = a[1] - 1, n_max = a[2] - a[1] -3, na = "Invalid") %>%
+    d <- readxl::read_excel(TECAN_files[i], skip = start[1] - 1, n_max = start[2] - start[1] -3, na = "Invalid") %>%
       dplyr::rename_at(vars(1:3), ~ c("cycle","time","temp")) %>%
       dplyr::rename_with(.cols = !c("cycle","time","temp"), ~ wells) %>%
       tidyr::pivot_longer(cols = !c("cycle","time","temp"), names_to = "well", values_to = "value") %>%
