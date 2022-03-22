@@ -267,7 +267,7 @@ read_kinetic_TECAN <- function(TECAN_files, layout_files, n_cond = 3,
     d <- readxl::read_excel(TECAN_files[i], skip = a[1] - 1, n_max = a[2] - a[1] -3, na = "Invalid") %>%
       dplyr::rename_at(vars(1:3), ~ c("cycle","time","temp")) %>%
       dplyr::rename_with(.cols = !c("cycle","time","temp"), ~ wells) %>%
-      pivot_longer(cols = !c("cycle","time","temp"), names_to = "well", values_to = "value") %>%
+      tidyr::pivot_longer(cols = !c("cycle","time","temp"), names_to = "well", values_to = "value") %>%
       tibble::add_column(plate = i) %>%
       dplyr::mutate(p_well = paste(plate, well, sep = "_"))
     
