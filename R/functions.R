@@ -297,3 +297,21 @@ read_kinetic_TECAN <- function(TECAN_files, layout_files, n_cond = 3,
 }
 
 
+
+fancy_scientific <- function(l) {
+  l <- format(l, scientific = TRUE)
+  l <- gsub("^(.*)e", "'\\1'e", l)
+  l <- gsub("e", "%*%10^", l)
+  l <- stringr::str_remove(l, "[+]")
+  parse(text=l)
+}
+
+fancy_scientific2 <- function(l){
+  l <- format(l, scientific = TRUE)
+  l <- gsub("^(.*)e", "'\\1'e", l)
+  l <- gsub("e", "%*%10^", l)
+  l <- stringr::str_remove(l, "[+]")
+  l <- stringr::str_extract(l, "10\\^-?\\d+")
+  #l <- stringr::str_replace(l, "10\\^00", "1")
+  parse(text=l)
+}
