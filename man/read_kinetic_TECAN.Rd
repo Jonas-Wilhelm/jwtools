@@ -20,7 +20,8 @@ read_kinetic_TECAN(
 
 \item{n_cond}{Number of conditions per well in the plate layout files.}
 
-\item{plate_type}{Type of plates used. Has to be either "96" or "384".}
+\item{plate_type}{Type of plates used. Has to be either "96" or "384".
+(default is "96")}
 
 \item{pre_trigger}{Number of pre-trigger time points to discard.}
 

@@ -192,6 +192,7 @@ summarise_nls_MC <- function(data, conf.level = 0.95){
 #' @param layout_files A vector of the respective plate layout files.
 #' @param n_cond Number of conditions per well in the plate layout files.
 #' @param plate_type Type of plates used. Has to be either "96" or "384".
+#' (default is "96")
 #' @param pre_trigger Number of pre-trigger time points to discard.
 #' @param delay Delay time between starting the kinetic and the first time point 
 #' (after pre-trigger) in seconds. Can be either a single value which is used
@@ -327,11 +328,18 @@ fancy_scientific2 <- function(l){
 }
 
 
-#' Title
+#' Plot plate overview
 #'
-#' Description
+#' `plot_kinetics_plate()` takes data imported by `read_kinetic_TECAN()` and
+#' generates overview plots for each plate in a specified directory
 #' @importFrom magrittr %>%
 #' @import ggplot2
+#' @param data A data frame imported by `read_kinetic_TECAN()`
+#' @param plate_type Type of plates used. Has to be either "96" or "384". 
+#' (default is "96")
+#' @param path Output path for the generated plots
+#' @param width Width of the plots in mm, defaults to 400
+#' @param height Height of the plots in mm, defaults to 300
 #' @export
 
 

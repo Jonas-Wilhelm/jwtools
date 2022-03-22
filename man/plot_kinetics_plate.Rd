@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{plot_kinetics_plate}
 \alias{plot_kinetics_plate}
-\title{Title}
+\title{Plot plate overview}
 \usage{
 plot_kinetics_plate(
   data,
@@ -12,6 +12,19 @@ plot_kinetics_plate(
   height = 300
 )
 }
+\arguments{
+\item{data}{A data frame imported by \code{read_kinetic_TECAN()}}
+
+\item{plate_type}{Type of plates used. Has to be either "96" or "384".
+(default is "96")}
+
+\item{path}{Output path for the generated plots}
+
+\item{width}{Width of the plots in mm, defaults to 400}
+
+\item{height}{Height of the plots in mm, defaults to 300}
+}
 \description{
-Description
+\code{plot_kinetics_plate()} takes data imported by \code{read_kinetic_TECAN()} and
+generates overview plots for each plate in a specified directory
 }
