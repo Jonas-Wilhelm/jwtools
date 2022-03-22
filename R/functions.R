@@ -296,6 +296,11 @@ read_kinetic_TECAN <- function(TECAN_files, layout_files, n_cond = 3,
   
 }
 
+#' Title
+#'
+#' Description
+#' @importFrom magrittr %>%
+#' @export
 
 
 fancy_scientific <- function(l) {
