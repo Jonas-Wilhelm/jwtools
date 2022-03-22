@@ -116,12 +116,13 @@ timeseries_av <- function(data, window = 5){
 
 nls_MC <- function(model, runs = 1000){
   
-  sigma     <- broom::glance(model)$sigma
-  start     <- summary(model)$param[,1]
-  params_MC <- tibble::tibble()
-  data      <- broom::augment(model)
-  var       <- model$m$formula() %>% as.character() %>% .[2]
-  opt       <- model$control
+  sigma        <- broom::glance(model)$sigma
+  start        <- summary(model)$param[,1]
+  names(start) <- rownames(summary(model)$param)
+  params_MC    <- tibble::tibble()
+  data         <- broom::augment(model)
+  var          <- model$m$formula() %>% as.character() %>% .[2]
+  opt          <- model$control
   opt$warnOnly <- FALSE
   
   for(i in 1:runs){
@@ -138,6 +139,7 @@ nls_MC <- function(model, runs = 1000){
       params_MC <- dplyr::bind_rows(params_MC, broom::tidy(try) %>% tibble::add_column(run = i))
     }
   }
+  if(nrow(params_MC) < runs) warning(paste("only", nrow(params_MC), "of", runs, "runs converged sucessfully"))
   return(params_MC)
 }
 
