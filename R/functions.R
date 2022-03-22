@@ -212,7 +212,7 @@ read_kinetic_TECAN <- function(TECAN_files, layout_files, n_cond = 3,
   layout_files <- layout_files[!grepl("~", layout_files)]
   
   if(plate_type == "96"){
-    cols <- as.character(1:12) %>% str_pad(2, "left", "0")
+    cols <- as.character(1:12) %>% stringr::str_pad(2, "left", "0")
     rows <- LETTERS[1:8]
     wells <- c()
     for(i in rows){
