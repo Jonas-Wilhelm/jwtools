@@ -222,7 +222,7 @@ read_kinetic_TECAN <- function(TECAN_files, layout_files, n_cond = 3,
   }
   
   if(plate_type == "384"){
-    cols <- as.character(1:24)
+    cols <- as.character(1:24) %>% stringr::str_pad(2, "left", "0")
     rows <- LETTERS[1:16]
     wells <- c()
     for(i in rows){
@@ -286,7 +286,7 @@ read_kinetic_TECAN <- function(TECAN_files, layout_files, n_cond = 3,
     dplyr::group_by(p_well) %>%
     dplyr::mutate(time = time - min(time)) %>%
     dplyr::ungroup() %>%
-    dplyr::left_join(delays) %>%
+    dplyr::left_join(delays, by = c("plate")) %>%
     dplyr::mutate(time = time + delay) %>%
     dplyr::select(-delay) %>%
     dplyr::arrange(p_well, time)
@@ -324,4 +324,52 @@ fancy_scientific2 <- function(l){
   l <- stringr::str_extract(l, "10\\^-?\\d+")
   #l <- stringr::str_replace(l, "10\\^00", "1")
   parse(text=l)
+}
+
+
+#' Title
+#'
+#' Description
+#' @importFrom magrittr %>%
+#' @import ggplot2
+#' @export
+
+
+plot_kinetics_plate <- function(data, plate_type = "96", path = "raw_plots", 
+                                width = 400, height = 300){
+  
+  if(plate_type == "96"){
+    cols <- as.character(1:12) %>% stringr::str_pad(2, "left", "0")
+    rows <- LETTERS[1:8]
+    wells <- c()
+    for(i in rows){
+      wells <- c(wells, paste0(i,cols))
+    }
+  }
+  
+  if(plate_type == "384"){
+    cols <- as.character(1:24) %>% stringr::str_pad(2, "left", "0")
+    rows <- LETTERS[1:16]
+    wells <- c()
+    for(i in rows){
+      wells <- c(wells, paste0(i,cols))
+    }
+  }
+  
+  data$row <- factor(data$row)
+  data$row <- forcats::fct_expand(data$row, rows) %>% forcats::fct_relevel(rows)
+  data$col <- factor(data$col)
+  data$col <- forcats::fct_expand(data$col, cols) %>% forcats::fct_relevel(cols)
+  
+  for(i in unique(data$plate)){
+    q <- data %>%
+      dplyr::filter(plate == i) %>%
+      ggplot(aes(x = time, y = value))+
+      geom_line()+
+      facet_grid(row~col, drop = F)+
+      labs(title = paste("Plate",i))+
+      theme(axis.text.x = element_text(angle = -45, hjust = 0))
+    ggsave(paste0(path,"/plate_",i,".pdf"), width = width, height = height, units = "mm")
+  }
+  
 }
