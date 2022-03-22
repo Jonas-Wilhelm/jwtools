@@ -302,7 +302,6 @@ read_kinetic_TECAN <- function(TECAN_files, layout_files, n_cond = 3,
 #' @importFrom magrittr %>%
 #' @export
 
-
 fancy_scientific <- function(l) {
   l <- format(l, scientific = TRUE)
   l <- gsub("^(.*)e", "'\\1'e", l)
@@ -310,6 +309,12 @@ fancy_scientific <- function(l) {
   l <- stringr::str_remove(l, "[+]")
   parse(text=l)
 }
+
+#' Title
+#'
+#' Description
+#' @importFrom magrittr %>%
+#' @export
 
 fancy_scientific2 <- function(l){
   l <- format(l, scientific = TRUE)
