@@ -281,7 +281,7 @@ read_kinetic_TECAN <- function(TECAN_files, layout_files, n_cond = 3,
                            delay = delay)
   
   data <- data %>%
-    readr::type_convert(col_types = cols()) %>%
+    readr::type_convert(col_types = readr::cols()) %>%
     dplyr::filter(cycle > pre_trigger) %>%
     dplyr::group_by(p_well) %>%
     dplyr::mutate(time = time - min(time)) %>%
