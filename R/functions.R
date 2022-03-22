@@ -256,7 +256,7 @@ read_kinetic_TECAN <- function(TECAN_files, layout_files, n_cond = 3,
   conditions <- conditions %>% 
     dplyr::arrange(p_well) %>% 
     stats::na.omit() %>%
-    readr::type_convert(col_types = cols())
+    readr::type_convert(col_types = readr::cols())
   
   data <- tibble::tibble()
   
