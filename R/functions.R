@@ -139,7 +139,7 @@ nls_MC <- function(model, runs = 1000){
       params_MC <- dplyr::bind_rows(params_MC, broom::tidy(try) %>% tibble::add_column(run = i))
     }
   }
-  if(nrow(params_MC) < runs) warning(paste("only", nrow(params_MC), "of", runs, "runs converged sucessfully"))
+  if(nrow(params_MC)/length(start) < runs) warning(paste("only", nrow(params_MC)/length(start), "of", runs, "runs converged sucessfully"))
   return(params_MC)
 }
 
@@ -275,6 +275,8 @@ read_kinetic_TECAN <- function(TECAN_files, layout_files, n_cond = 3,
     data <- dplyr::bind_rows(data, d)
     
   }
+  
+  data <- stats::na.omit(data)
   
   data <- dplyr::left_join(data, conditions, by = c("well", "plate", "p_well"))
   
