@@ -141,7 +141,7 @@ nls_MC <- function(model, runs = 1000){
   }
   if(nrow(params_MC)/length(start) < runs) warning(paste("only", nrow(params_MC)/length(start), "of", runs, "runs converged sucessfully"))
   params_MC <- params_MC %>%
-    add_column(init_estimate = rep(start, nrow(params_MC)/length(start)))
+    tibble::add_column(init_estimate = rep(start, nrow(params_MC)/length(start)))
   return(params_MC)
 }
 
