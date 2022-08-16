@@ -13,7 +13,7 @@ summarise_nls_MC(data, conf.level = 0.95)
 }
 \description{
 Summarizes the output of the nls_MC() function. For each fitted parameter
-mean, standard deviation and confidence intervals are computed.
+mean, original estimate, standard deviation and confidence intervals are computed.
 }
 \examples{
 n <- nls(mpg ~ k * e ^ wt, data = mtcars, start = list(k = 1, e = 2))

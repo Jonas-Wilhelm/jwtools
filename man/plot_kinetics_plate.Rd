@@ -8,7 +8,7 @@ plot_kinetics_plate(
   data,
   plate_type = "96",
   path = "raw_plots",
-  width = 400,
+  width = 450,
   height = 300
 )
 }
