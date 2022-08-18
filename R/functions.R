@@ -149,6 +149,57 @@ nls_MC <- function(model, runs = 1000){
 
 
 
+#' Monte Carlo simulations of linear least squares models fitted with nlsLM
+#' from the minpack.lm package
+#'
+#' Perform Monte Carlo (MC) simulations of non linear least squares models 
+#' fitted with `nlsLM` from the `minpack.lm` package
+#' @importFrom magrittr %>%
+#' @param model A nlsLM object to perform MC calculations with.
+#' @param runs Number of MC runs to perform (defaults to 1000).
+#' @export
+#' @examples
+#' n <- nls(mpg ~ k * e ^ wt, data = mtcars, start = list(k = 1, e = 2))
+#' nls_MC(n)
+
+
+
+nlsLM_MC <- function(model, runs = 1000){
+  
+  sigma        <- broom::glance(model)$sigma
+  start        <- summary(model)$param[,1]
+  names(start) <- rownames(summary(model)$param)
+  params_MC    <- tibble::tibble()
+  data         <- broom::augment(model)
+  var          <- model$m$formula() %>% as.character() %>% .[2]
+  opt          <- model$control
+  opt$warnOnly <- FALSE
+  
+  for(i in 1:runs){
+    data_MC <- data
+    data_MC[var] <- data$.fitted + rnorm(n = nrow(data), mean = 0, sd = sigma)
+    try <- try(
+      nls <- nls(model$m$formula(),
+                 data    = data_MC, 
+                 start   = start, 
+                 control = opt),
+      silent = T
+    )
+    if(!"try-error" %in% class(try)){
+      params_MC <- dplyr::bind_rows(params_MC, broom::tidy(try) %>% tibble::add_column(run = i))
+    }
+  }
+  if(nrow(params_MC)/length(start) < runs) warning(paste("only", nrow(params_MC)/length(start), "of", runs, "runs converged sucessfully"))
+  params_MC <- params_MC %>%
+    tibble::add_column(init_estimate = rep(start, nrow(params_MC)/length(start)))
+  return(params_MC)
+}
+
+
+
+
+
+
 
 #' Summarize Monte Carlo simulations of linear least squares models
 #'
