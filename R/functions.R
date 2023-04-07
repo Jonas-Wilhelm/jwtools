@@ -295,10 +295,10 @@ read_kinetic_TECAN <- function(TECAN_files, layout_files, n_cond = 3,
                                        col_names = cols) %>%
       tibble::add_column(cond_n = paste0("cond_", rep(1:n_cond, nrow(.)/n_cond))) %>%
       tibble::add_column(row = rep(rows, each = n_cond)) %>%
+      dplyr::mutate(dplyr::across(tidyselect::everything(), as.character)) %>%
       tidyr::pivot_longer(!c("cond_n", "row"), 
                           names_to = "col", 
                           values_to = "cond") %>%
-      dplyr::mutate(cond = as.character(cond)) %>%
       tibble::add_column(plate = i) %>%
       dplyr::mutate(well = paste0(row, col),
                     p_well = paste(plate, well, sep = "_")) %>%
