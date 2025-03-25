@@ -23,6 +23,30 @@ read_biokine <- function(path = ""){
 
 
 
+#' Read fixed width tabular file
+#'
+#' This function reads fixed with tabular files like scorefiles
+#' from Rosetta or derived tools as FastMPNNDesign.
+#' @importFrom magrittr %>%
+#' @param path Path to the input fixed width file.
+#' @export
+#' @examples
+#' read_fmd_scores(path = "my_file.txt")
+
+read_fmd_scores <- function(path){
+    header <- readr::read_lines(path, n_max = 1)
+    matches <- stringr::str_locate_all(header, "\\S+")[[1]]
+    col_names <- stringr::str_sub(header, matches[,1], matches[,2])
+    starts <- c(1, head(matches[,2] + 1, -1))
+    ends <- matches[, 2]
+    ends[length(ends)] <- NA # read last col to the end no matter the length
+    spec <- vroom::fwf_positions(start = starts, end = ends, col_names = col_names)
+    scores <- readr::read_fwf(path, col_positions = spec, skip = 1, guess_max = 1)
+    return(scores %>% na.omit())
+}
+
+
+
 
 #' Import all bio-kine ascii files (.bka) in a directory
 #'
