@@ -26,23 +26,49 @@ read_biokine <- function(path = ""){
 #' Read fixed width tabular file
 #'
 #' This function reads fixed with tabular files like scorefiles
-#' from Rosetta or derived tools as FastMPNNDesign.
-#' @importFrom magrittr %>%
+#' from Rosetta or derived tools as FastMPNNDesign. Also supports
+#' zstd compressed files (.zst).
 #' @param path Path to the input fixed width file.
 #' @export
 #' @examples
 #' read_fmd_scores(path = "my_file.txt")
 
 read_fmd_scores <- function(path){
-    header <- readr::read_lines(path, n_max = 1)
-    matches <- stringr::str_locate_all(header, "\\S+")[[1]]
-    col_names <- stringr::str_sub(header, matches[,1], matches[,2])
-    starts <- c(1, head(matches[,2] + 1, -1))
-    ends <- matches[, 2]
-    ends[length(ends)] <- NA # read last col to the end no matter the length
-    spec <- vroom::fwf_positions(start = starts, end = ends, col_names = col_names)
-    scores <- readr::read_fwf(path, col_positions = spec, skip = 1, guess_max = 1)
-    return(scores %>% na.omit())
+
+  is_zst <- grepl("\\.zst$", path, ignore.case = TRUE)
+
+  con <- if (is_zst) {
+    pipe(sprintf("zstdcat %s", shQuote(path)), open = "rb")
+  } else {
+    file(path, open = "rb")
+  }
+
+  on.exit(close(con))
+
+  header <- readr::read_lines(con, n_max = 1)
+
+  matches <- stringr::str_locate_all(header, "\\S+")[[1]]
+  col_names <- stringr::str_sub(header, matches[,1], matches[,2])
+
+  starts <- c(1, head(matches[,2] + 1, -1))
+  ends <- matches[, 2]
+  ends[length(ends)] <- NA
+
+  spec <- vroom::fwf_positions(
+    start = starts,
+    end = ends,
+    col_names = col_names
+  )
+
+  scores <- vroom::vroom_fwf(
+    con,
+    col_positions = spec,
+    skip = 1,
+    altrep = TRUE,
+    progress = TRUE
+  )
+
+  scores |> tidyr::drop_na()
 }
 
 

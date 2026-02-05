@@ -11,7 +11,8 @@ read_fmd_scores(path)
 }
 \description{
 This function reads fixed with tabular files like scorefiles
-from Rosetta or derived tools as FastMPNNDesign.
+from Rosetta or derived tools as FastMPNNDesign. Also supports
+zstd compressed files (.zst).
 }
 \examples{
 read_fmd_scores(path = "my_file.txt")
